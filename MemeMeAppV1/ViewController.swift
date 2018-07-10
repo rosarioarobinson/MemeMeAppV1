@@ -16,6 +16,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+    @IBOutlet weak var navigationBar: UINavigationItem!
+    @IBOutlet weak var toolBar: UIToolbar!
+    
     
     //memeTextAttributes to stylize
     let memeTextAttributes:[String: Any] = [
@@ -83,11 +86,23 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    //allows keyboard to move frame upwards to show 'BOTTOM' text
-    func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y -= getKeyboardHeight(notification: notification)
+    func generateMemedImage() -> UIImage {
+        
+        //hide toolbar and navbar
+        
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        //show toolbar and navbar
+        
+        return memedImage
     }
     
+    //Mark: Functions for keyboard display
     //get keyboard height from user dictionary
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo!
@@ -98,11 +113,43 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //subscribe to keyboard notifications
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // unsubscribe to keyboard notifications
     func unsubscribeFromKeyboardNotifications() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    //allows keyboard to move frame upwards to show 'BOTTOM' text
+    func keyboardWillShow(notification: NSNotification) {
+        self.view.frame.origin.y -= getKeyboardHeight(notification: notification)
+    }
+    
+    //hides the keyboard
+    func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    //created struct for each meme created
+    struct Meme {
+        var topText = ""
+        var botText = ""
+        var originalImage: UIImage?
+        var memedImage: UIImage?
+    }
+    
+    func save() {
+        // Create the meme
+        _ = Meme(topText: topTextField.text!, botText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
+    }
+    
+    //to return back to main screen when cancel is pressed in Nav Bar
+    @IBAction func cancelButton(_ sender: Any) {
+        imagePickerView.image = nil
+        
     }
     
 }
