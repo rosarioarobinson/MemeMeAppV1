@@ -16,7 +16,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
-    @IBOutlet weak var navigationBar: UINavigationItem!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var toolBar: UIToolbar!
     
     
@@ -89,7 +89,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func generateMemedImage() -> UIImage {
         
         //hide toolbar and navbar
-        
+        self.toolBar.isHidden = false
+        self.navigationBar.isHidden = false
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -98,6 +99,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         UIGraphicsEndImageContext()
         
         //show toolbar and navbar
+        self.toolBar.isHidden = true
+        self.navigationBar.isHidden = true
         
         return memedImage
     }
@@ -113,19 +116,16 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //subscribe to keyboard notifications
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // unsubscribe to keyboard notifications
     func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-    }
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)    }
     
     
     //allows keyboard to move frame upwards to show 'BOTTOM' text
     func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y -= getKeyboardHeight(notification: notification)
+        self.view.frame.origin.y = getKeyboardHeight(notification: notification) * -1
     }
     
     //hides the keyboard
@@ -145,6 +145,21 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         // Create the meme
         _ = Meme(topText: topTextField.text!, botText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
     }
+    
+    //generate the meme
+    @IBAction func shareMeme(_ sender: UIBarButtonItem) {
+        let memedImage = generateMemedImage()
+        let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
+        
+        //to save the meme
+        activityViewController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItemds: [Any]?, error: Error?) -> Void in
+            if completed {
+                self.save()
+            }
+        }
+    }
+    
     
     //to return back to main screen when cancel is pressed in Nav Bar
     @IBAction func cancelButton(_ sender: Any) {

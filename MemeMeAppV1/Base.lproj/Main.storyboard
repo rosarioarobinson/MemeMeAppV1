@@ -73,7 +73,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="e0y-jm-OPF">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="r9q-BV-CQL"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="r9q-BV-CQL">
+                            <connections>
+                                <action selector="shareMeme:" destination="BYZ-38-t0r" id="HiI-2I-2yv"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="9QT-q3-lDn">
                             <connections>
                                 <action selector="cancelButton:" destination="BYZ-38-t0r" id="dAi-QU-JfW"/>
@@ -96,6 +100,7 @@
         <!--Navigation Controller-->
         <scene sceneID="iEN-z3-Dfh">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wsS-WL-hxX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yif-0q-fAf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mxX-fB-v7X">
@@ -107,7 +112,6 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="9cj-gi-erQ"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wsS-WL-hxX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-391" y="33"/>
         </scene>
