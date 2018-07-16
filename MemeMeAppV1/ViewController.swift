@@ -27,7 +27,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         NSAttributedStringKey.font.rawValue: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedStringKey.strokeWidth.rawValue: -5]
     
-    
+    //cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -41,6 +41,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         imagePickerView.contentMode = .scaleAspectFit
         
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -113,24 +114,33 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return keyboardSize.cgRectValue.height
     }
     
+    //app crashes due to keyboardWillShow?
     //subscribe to keyboard notifications
     func subscribeToKeyboardNotifications() {
-        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // unsubscribe to keyboard notifications
     func unsubscribeFromKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)    }
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
     
     
     //allows keyboard to move frame upwards to show 'BOTTOM' text
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         self.view.frame.origin.y = getKeyboardHeight(notification: notification) * -1
     }
     
     //hides the keyboard
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         view.frame.origin.y = 0
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     //created struct for each meme created
@@ -151,6 +161,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         let memedImage = generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
+        print("testing share functionality")
         
         //to save the meme
         activityViewController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItemds: [Any]?, error: Error?) -> Void in
