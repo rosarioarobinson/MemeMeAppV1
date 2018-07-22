@@ -14,6 +14,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBOutlet weak var imagePickerView: UIImageView!
     //for cameraButton, add IBOutlet from toolbar
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var navigationBar: UINavigationBar!
@@ -51,6 +52,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        shareButton.isEnabled = (imagePickerView.image != nil)
         
         // Subscribe to keyboard notifications to allow the view to raise when necessary
         subscribeToKeyboardNotifications()
@@ -180,6 +182,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //to return back to main screen when cancel is pressed in Nav Bar
     @IBAction func cancelButton(_ sender: Any) {
         imagePickerView.image = nil
+        shareButton.isEnabled = false
         
     }
     
