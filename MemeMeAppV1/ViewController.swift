@@ -32,13 +32,18 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        
         //Code for textfields
+        
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = NSTextAlignment.center
         bottomTextField.textAlignment = NSTextAlignment.center
         
         imagePickerView.contentMode = .scaleAspectFit
+        
         
     }
     
