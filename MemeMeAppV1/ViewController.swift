@@ -33,18 +33,20 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-        
         //Code for textfields
-        
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = NSTextAlignment.center
-        bottomTextField.textAlignment = NSTextAlignment.center
+        configure(topTextField, with: "TOP")
+        configure(bottomTextField, with: "BOTTOM")
         
         imagePickerView.contentMode = .scaleAspectFit
         
+        
+    }
+    
+    //to prevent redundant code
+    func configure(_ textField: UITextField, with defaultText: String) {
+        textField.delegate = self
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = NSTextAlignment.center
         
     }
     
@@ -66,18 +68,19 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     //Mark: IBAction to choose image
     //Connected to 'Album' button in toolbar
     @IBAction func pickAnImage(_ sender: Any) {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        present(pickerController, animated: true, completion: nil)
-        
+        pickAnImage(from: .photoLibrary)
     }
     
     //Mark: IBAction to open camera
     @IBAction func pickAnImageFromCamera(_ sender: Any) {
+        pickAnImage(from: .camera)
+    }
+    
+    //to prevent redundant code from camera and album, add func
+    func pickAnImage(from sourceType: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+        imagePicker.sourceType = sourceType
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -97,8 +100,8 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     func generateMemedImage() -> UIImage {
         
         //hide toolbar and navbar
-        self.toolBar.isHidden = false
-        self.navigationBar.isHidden = false
+        self.toolBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -107,9 +110,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         UIGraphicsEndImageContext()
         
         //show toolbar and navbar
-        self.toolBar.isHidden = true
-        self.navigationBar.isHidden = true
-        
+        self.toolBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = false
+
         return memedImage
     }
     
@@ -121,7 +124,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return keyboardSize.cgRectValue.height
     }
     
-    //app crashes due to keyboardWillShow?
+    //had a few issues with keyboard appearing?
     //subscribe to keyboard notifications
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
@@ -137,7 +140,9 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     
     //allows keyboard to move frame upwards to show 'BOTTOM' text
     @objc func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y = getKeyboardHeight(notification: notification) * -1
+        if bottomTextField.isFirstResponder {
+            view.frame.origin.y = getKeyboardHeight(notification: notification) * -1
+        }
     }
     
     //hides the keyboard
