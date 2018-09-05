@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  MemeMeAppV1
+//  MemeMeApp for Version 2
 //
 //  Created by Rosario A Robinson on 7/2/18.
 //  Copyright © 2018 Rosario Robinson. All rights reserved.
