@@ -12,7 +12,7 @@ import UIKit
 class MemeCollectionViewController: UICollectionViewController {
     
     var memes: [Meme] {
-        return (UIApplication.sharedApplication().delegate as! AppDelegate).memes
+        return (UIApplication.shared.delegate as! AppDelegate).memes
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,8 +34,9 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return memes.count
     }
+    
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //dequeue a reusable cell
@@ -56,7 +57,7 @@ class MemeCollectionViewController: UICollectionViewController {
 
         
         // Present the view controller using navigation
-        navigationController!.pushViewController(detailController, animated: true)
+        //navigationController!.pushViewController(detailController, animated: true)
 
     }
 }
