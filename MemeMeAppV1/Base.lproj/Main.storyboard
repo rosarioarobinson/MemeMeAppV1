@@ -116,10 +116,10 @@
             </objects>
             <point key="canvasLocation" x="-2749" y="57"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="Th8-N9-eAX">
             <objects>
-                <tableViewController id="byS-hX-VOD" sceneMemberID="viewController">
+                <tableViewController id="byS-hX-VOD" userLabel="Sent Memes" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Gli-cc-tmf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -139,7 +139,9 @@
                             <outlet property="delegate" destination="byS-hX-VOD" id="Jmy-hM-1I5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="zzb-oY-xsE"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="zzb-oY-xsE" userLabel="Sent Memes">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="N7F-A1-3LV"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H79-3G-XzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

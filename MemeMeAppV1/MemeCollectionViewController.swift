@@ -42,7 +42,6 @@ class MemeCollectionViewController: UICollectionViewController {
         //dequeue a reusable cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewController", for: indexPath) as! MemeCollectionViewCell
         
-        //
         let meme: Meme = memes[(indexPath as NSIndexPath).row]
         cell.memeImageView.image = meme.memedImage
         
