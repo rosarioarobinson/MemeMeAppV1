@@ -25,11 +25,16 @@ class MemeTableViewController: UITableViewController {
         return memes.count
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MemeCell, for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //dequeue
+        _ = tableView.dequeueReusableCell(withIdentifier: "MemeCell", for: indexPath)
+        let meme = memes[indexPath.row]
+        cell.textLabel?.text = memes[indexPath.row]
+        return cell
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
 }

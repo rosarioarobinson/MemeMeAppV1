@@ -155,21 +155,13 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         return true
     }
     
-    //created struct for each meme created
-    struct Meme {
-        var topText = ""
-        var botText = ""
-        var originalImage: UIImage?
-        var memedImage: UIImage?
-    }
-    
     func save() {
         // Create the meme
-        _ = Meme(topText: topTextField.text!, botText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
+        let myMeme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
         
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
-        appDelegate.memes.append(Meme)
+        appDelegate.memes.append(myMeme)
     }
     
     //generate the meme
