@@ -184,6 +184,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
     @IBAction func cancelButton(_ sender: Any) {
         imagePickerView.image = nil
         shareButton.isEnabled = false
+        dismiss(animated: true, completion: nil)
         
     }
     

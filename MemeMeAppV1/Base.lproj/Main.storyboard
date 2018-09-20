@@ -24,6 +24,9 @@
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="4bz-Fs-Rlj">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="48j-Ez-8eg"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="rxA-Xd-jdy"/>
                                     <barButtonItem systemItem="camera" id="7Ld-V3-WlO">
@@ -140,12 +143,45 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="zzb-oY-xsE" userLabel="Sent Memes">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="N7F-A1-3LV"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="N7F-A1-3LV">
+                            <connections>
+                                <segue destination="Yif-0q-fAf" kind="showDetail" id="Mem-wi-hco"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H79-3G-XzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-795" y="811"/>
+        </scene>
+        <!--Meme Detail View Controller-->
+        <scene sceneID="RW3-e5-zP0">
+            <objects>
+                <viewController storyboardIdentifier="MemeDetailViewController" id="6dk-oV-V36" customClass="MemeDetailViewController" customModule="MemeMeAppV1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bnW-l7-mb4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rbP-yK-uQM">
+                                <rect key="frame" x="67" y="200" width="240" height="220"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cM0-WE-6dl" firstAttribute="trailing" secondItem="rbP-yK-uQM" secondAttribute="trailing" constant="68" id="8nc-hI-7KS"/>
+                            <constraint firstItem="cM0-WE-6dl" firstAttribute="bottom" secondItem="rbP-yK-uQM" secondAttribute="bottom" constant="247" id="A03-D3-7xY"/>
+                            <constraint firstItem="rbP-yK-uQM" firstAttribute="top" secondItem="cM0-WE-6dl" secondAttribute="top" constant="180" id="Lcq-sS-E5N"/>
+                            <constraint firstItem="rbP-yK-uQM" firstAttribute="leading" secondItem="cM0-WE-6dl" secondAttribute="leading" constant="67" id="X14-ks-45X"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cM0-WE-6dl"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="rbP-yK-uQM" id="loM-Yv-pQa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eo2-2l-BhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="148" y="829.83508245877067"/>
         </scene>
         <!--Item-->
         <scene sceneID="IeB-Ro-6mU">

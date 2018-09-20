@@ -25,12 +25,14 @@ class MemeCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Layout
         let space:CGFloat = 3.0
-        let dimension = (view.frame.size.width - (2 * space)) / 3.0
+        let widthDimension = (view.frame.size.width - (2 * space)) / 3.0
+        let heightDimension = (view.frame.size.height - (2 * space)) / 3.0
         
         flowLayout.minimumInteritemSpacing = space
         flowLayout.minimumLineSpacing = space
-        flowLayout.itemSize = CGSize(width: dimension, height: dimension)
+        flowLayout.itemSize = CGSize(width: widthDimension, height: heightDimension)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -49,15 +51,17 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Grab the DetailVC
-        
-        
-        //Populate view controller with data from the selected item
-
-        
-        // Present the view controller using navigation
-        //navigationController!.pushViewController(detailController, animated: true)
-
+        performSegue(withIdentifier: "MemeDetailViewController", sender: indexPath)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MemeDetailViewController" {
+            let controller = segue.destination as! MemeDetailViewController
+            if let selectedIndexPath = sender as? NSIndexPath {
+                controller.currentMeme = self.appDelegate.memes[selectedIndexPath.row] as! Meme
+                controller.memeIndex = selectedIndexPath.row
+            }
+        }
     }
 }
 
