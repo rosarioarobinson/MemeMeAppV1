@@ -175,6 +175,7 @@ UINavigationControllerDelegate, UITextFieldDelegate {
         activityViewController.completionWithItemsHandler = { (activityType: UIActivityType?, completed: Bool, returnedItemds: [Any]?, error: Error?) -> Void in
             if completed {
                 self.save()
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }

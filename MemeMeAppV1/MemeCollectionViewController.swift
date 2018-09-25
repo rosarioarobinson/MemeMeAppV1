@@ -42,7 +42,7 @@ class MemeCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         //dequeue a reusable cell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewController", for: indexPath) as! MemeCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionViewCell", for: indexPath) as! MemeCollectionViewCell
         
         let meme: Meme = memes[(indexPath as NSIndexPath).row]
         cell.memeImageView.image = meme.memedImage
@@ -56,11 +56,8 @@ class MemeCollectionViewController: UICollectionViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemeDetailViewController" {
-            let controller = segue.destination as! MemeDetailViewController
-            if let selectedIndexPath = sender as? NSIndexPath {
-                controller.currentMeme = self.appDelegate.memes[selectedIndexPath.row] as! Meme
-                controller.memeIndex = selectedIndexPath.row
-            }
+            let MemeDetailViewController = segue.destination as! MemeDetailViewController
+            MemeDetailViewController.meme = sender as! Meme
         }
     }
 }
