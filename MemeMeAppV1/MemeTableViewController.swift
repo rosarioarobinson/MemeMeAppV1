@@ -28,9 +28,9 @@ class MemeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //dequeue
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemeCell", for: indexPath) as! MemeTableViewCell
-        _ = memes[indexPath.row]
-        cell.nameLabel?.text = memes[indexPath.row].topText + " ... " + memes[indexPath.row].bottomText
-        cell.memeImageView?.image = memes[indexPath.row].memedImage
+        let meme = memes[indexPath.row]
+        cell.nameLabel?.text = meme.topText + " ... " + meme.bottomText
+        cell.memeImageView?.image = meme.memedImage
         return cell
     }
     
@@ -38,13 +38,13 @@ class MemeTableViewController: UITableViewController {
         let meme = (UIApplication.shared.delegate as! AppDelegate).memes[(indexPath as NSIndexPath).row]
         
         tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "MemeDetailViewController", sender: nil)
+        performSegue(withIdentifier: "MemeDetailViewController", sender: meme)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemeDetailViewController" {
-            let MemeDetailViewController = segue.destination as! MemeDetailViewController
-            MemeDetailViewController.meme = sender as! Meme
+            let memeDetailViewController = segue.destination as! MemeDetailViewController
+            memeDetailViewController.meme = sender as! Meme
         }
     }
 }

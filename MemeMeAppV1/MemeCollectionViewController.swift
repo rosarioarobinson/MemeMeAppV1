@@ -51,16 +51,15 @@ class MemeCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "MemeDetailViewController", sender: indexPath)
+        let meme = (UIApplication.shared.delegate as! AppDelegate).memes[(indexPath as NSIndexPath).row]
+        performSegue(withIdentifier: "MemeDetailViewController", sender: memes)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MemeDetailViewController" {
-            let MemeDetailViewController = segue.destination as! MemeDetailViewController
-            MemeDetailViewController.meme = sender as! Meme
+            let memeDetailViewController = segue.destination as! MemeDetailViewController
+            memeDetailViewController.meme = sender as! Meme
         }
     }
 }
-
-
 

@@ -13,11 +13,13 @@ class MemeDetailViewController: UIViewController {
     
     var meme : Meme!
     
+    //removed label outlet
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
+    //@IBOutlet weak var label: UILabel!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        imageView.image = meme.memedImage
     }
 
 }
